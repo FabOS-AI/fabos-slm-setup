@@ -2,6 +2,15 @@
 
 Compose files of the stack can be found in the sub-directory `compose`.
 
+Get latest version via Git:
+```sh
+git clone --filter=blob:none --no-checkout --depth 1 https://github.com/FabOS-AI/fabos-slm-setup && \
+cd fabos-slm-setup && \
+git sparse-checkout init --cone && \
+git sparse-checkout set compose && \
+cd compose
+```
+
 ## Start
 
 Set in file `compose/.env` the variable `SLM_HOSTNAME` to the hostname of the host where the stack will be started. E.g.:
