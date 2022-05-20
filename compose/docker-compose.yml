@@ -163,6 +163,8 @@ services:
       default:
         aliases:
           - ui
+    extra_hosts:
+      - "${SLM_HOSTNAME}:172.17.0.1"
     environment:
       VUE_APP_KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
     healthcheck:
