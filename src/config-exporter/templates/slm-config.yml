@@ -1,0 +1,51 @@
+slm:
+  host: "{{ target_host }}"
+
+keycloak:
+  auth-server-url: "{{ keycloak_auth_server_url }}"
+
+awx:
+  url: "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
+  users:
+    awx-jwt-proxy:
+      username: "{{ awx_jwt_proxy_username }}"
+      password: "{{ awx_jwt_proxy_password }}"
+    notification-service:
+      username: "{{ awx_notification_service_username }}"
+      password: "{{ awx_notification_service_password }}"
+    resource-registry:
+      username: "{{ awx_resource_registry_username }}"
+      password: "{{ awx_resource_registry_password }}"
+    service-registry:
+      username: "{{ awx_service_registry_username }}"
+      password: "{{ awx_service_registry_password }}"
+
+consul:
+  url: "{{ consul_scheme }}://{{ consul_hostname }}:{{ consul_port }}"
+  master_token: "{{ consul_master_token }}"
+  tokens:
+    resource-registry: "{{ consul_resource_registry_token }}"
+    service-registry: "{{ consul_service_registry_token }}"
+
+vault:
+  url: "{{ vault_scheme }}://{{ vault_hostname }}:{{ vault_port }}"
+  root_token: "{{ vault_root_token }}"
+  app-roles:
+    awx-jwt-proxy:
+      role-id: "{{ vault_awx_jwt_proxy_app_role_id }}"
+      secret-id: "{{ vault_awx_jwt_proxy_app_secret_id }}"
+    resource-registry:
+      role-id: "{{ vault_resource_registry_app_role_id }}"
+      secret-id: "{{ vault_resource_registry_app_secret_id }}"
+    service-registry:
+      role-id: "{{ vault_service_registry_app_role_id }}"
+      secret-id: "{{ vault_service_registry_app_secret_id }}"
+
+notification-service:
+  url: "http://{{ notification_service_host }}:{{ notification_service_port }}"
+
+resource-registry:
+  url: "http://{{ resource_registry_host }}:{{ resource_registry_port }}"
+
+service-registry:
+  url: "http://{{ service_registry_host }}:{{ service_registry_port }}"

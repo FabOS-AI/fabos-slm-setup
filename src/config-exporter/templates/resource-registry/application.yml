@@ -1,0 +1,93 @@
+### Application
+application:
+  name: "^project.artifactId^"
+  version: "^project.version^"
+  timestamp: "^timestamp^"
+
+### Server / API
+server:
+  port: 9010
+  error:
+    include-message: always
+
+open-api:
+  title: Resource Registry
+  description: REST API of Resource Registry
+  version: "^project.version^"
+  contact:
+    name: Fraunhofer IPA
+    url: https://www.ipa.fraunhofer.de
+    email: matthias.schneider@ipa.fraunhofer.de
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+### Spring
+spring:
+  application:
+    name: resource_registry
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    bootstrap:
+      enable: false
+    consul:
+      enabled: false
+  security:
+    user:
+      name: "user"
+      password: "password"
+
+### Components - Internal
+notification-service:
+  scheme: "http"
+  host: "localhost"
+  port: 9001
+
+### Keycloak
+keycloak:
+  config:
+    auth-white-list: "/broker/resource-manager/**"
+    tenants:
+      config-path: keycloak/
+      client-registration-enable: false
+      client-update-enable: false
+      resolve-by-path: true
+      resolve-by-header: true
+      resolver-base-path: /
+      resolver-header: Realm
+      redirect-uris:
+      web-origins:
+
+### AWX
+awx:
+  url: {{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}
+  username: {{ awx_resource_registry_username }}
+  password: {{ awx_resource_registry_password }}
+
+### Consul
+consul:
+  scheme: {{ consul_scheme }}
+  host: {{ consul_hostname }}
+  port: {{ consul_port }}
+  datacenter: fabos
+  acl-token: {{ consul_resource_registry_token }}
+
+### Vault
+vault:
+  scheme: {{ vault_scheme }}
+  host: {{ vault_hostname }}
+  port: {{ vault_port }}
+  authentication: APPROLE
+  app-role:
+    role-id: {{ vault_resource_registry_app_role_id }}
+    secret-id: {{ vault_resource_registry_app_secret_id }}
+    app-role-path: approle

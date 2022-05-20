@@ -1,0 +1,52 @@
+name: Docker Images
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build-and-push-awx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build base docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml -f docker-compose.yml build --no-cache awx-fixed-files
+      - name: Build AWX Web docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml -f docker-compose.yml build --no-cache awx-web
+      - name: Build AWX Task docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml -f docker-compose.yml build --no-cache awx-task
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - awx-postgres
+          - awx-init
+          - consul
+          - consul-init
+          - keycloak
+          - keycloak-database
+          - keycloak-init
+          - vault
+          - vault-init
+          - config-exporter
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml -f docker-compose.yml build --no-cache ${{ matrix.service }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME  }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD  }}
+      - name: Push docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml -f docker-compose.yml push ${{ matrix.service }}

@@ -1,0 +1,91 @@
+- name: "Export configuration"
+  hosts: localhost
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - set_fact:
+        configure_core_project: "{{ lookup('env', 'CONFIGURE_CORE_PROJECT') }}"
+        target_host: "{{ lookup('env', 'SLM_HOSTNAME') }}"
+    - set_fact:
+        keycloak_auth_server_url: "http://{{ lookup('env', 'SLM_HOSTNAME') }}:7080/auth"
+        keycloak_awx_jwt_proxy_config: "{{ lookup('file', '/config/keycloak/awx-jwt-proxy/fabos-keycloak.json') }}"
+        awx_scheme: "http"
+        awx_hostname: "{{ lookup('env', 'SLM_HOSTNAME') }}"
+        awx_port:  "{{ lookup('env', 'AWX_PORT_HTTP') }}"
+        awx_jwt_proxy_username: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_username') }}"
+        awx_jwt_proxy_password: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_password') }}"
+        awx_notification_service_username: "{{ lookup('file', '/config/awx/notification-service/awx_username') }}"
+        awx_notification_service_password: "{{ lookup('file', '/config/awx/notification-service/awx_password') }}"
+        awx_resource_registry_username: "{{ lookup('file', '/config/awx/resource-registry/awx_username') }}"
+        awx_resource_registry_password: "{{ lookup('file', '/config/awx/resource-registry/awx_password') }}"
+        awx_service_registry_username: "{{ lookup('file', '/config/awx/service-registry/awx_username') }}"
+        awx_service_registry_password: "{{ lookup('file', '/config/awx/service-registry/awx_password') }}"
+        consul_scheme: "http"
+        consul_hostname: "{{ target_host }}"
+        consul_port: "{{ lookup('env', 'CONSUL_PORT') }}"
+        consul_master_token: "{{ lookup('file', '/config/consul/root/consul_master_token') }}"
+        consul_resource_registry_token: "{{ lookup('file', '/config/consul/resource-registry/consul_token') }}"
+        consul_service_registry_token: "{{ lookup('file', '/config/consul/service-registry/consul_token') }}"
+        vault_scheme: "http"
+        vault_hostname: "{{ target_host }}"
+        vault_port: "{{ lookup('env', 'VAULT_PORT') }}"
+        vault_root_token: "{{ lookup('file', '/config/vault/root/root_token') }}"
+        vault_awx_jwt_proxy_authentication: "APPROLE"
+        vault_awx_jwt_proxy_app_role_id: "{{ lookup('file', '/config/vault/awx-jwt-proxy/role_id') }}"
+        vault_awx_jwt_proxy_app_secret_id: "{{ lookup('file', '/config/vault/awx-jwt-proxy/secret_id') }}"
+        vault_resource_registry_app_role_id: "{{ lookup('file', '/config/vault/resource-registry/role_id') }}"
+        vault_resource_registry_app_secret_id: "{{ lookup('file', '/config/vault/resource-registry/secret_id') }}"
+        vault_service_registry_app_role_id: "{{ lookup('file', '/config/vault/service-registry/role_id') }}"
+        vault_service_registry_app_secret_id: "{{ lookup('file', '/config/vault/service-registry/secret_id') }}"
+        resource_registry_host: "{{ target_host }}"
+        resource_registry_port: "{{ lookup('env', 'RESOURCE_REGISTRY_PORT') }}"
+        service_registry_host: "{{ target_host }}"
+        service_registry_port: "{{ lookup('env', 'SERVICE_REGISTRY_PORT') }}"
+        notification_service_host: "{{ target_host }}"
+        notification_service_port: "{{ lookup('env', 'NOTIFICATION_SERVICE_PORT') }}"
+
+    - name: "Ensures /project/_config_generated dir exists"
+      file:
+        path: "/project/_config_generated"
+        state: directory
+
+    - name: "Copy application properties"
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+       - src: /templates/slm-config.yml
+         dest: /project/_config_generated/slm-config.yml
+       - src: /templates/insomnia-env.json
+         dest: /project/_config_generated/insomnia-env.json
+
+    - name: "Copy application properties"
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - src: /templates/awx-jwt-proxy/application.yml
+          dest: /project/awx_jwt_proxy/src/main/resources/application.yml
+        - src: /templates/notification-service/application.yml
+          dest: /project/notification_service/notification_service.service/notification_service.service.rest/src/main/resources/application.yml
+        - src: /templates/resource-registry/application.yml
+          dest: /project/resource_registry/resource_registry.service/resource_registry.service.rest/src/main/resources/application.yml
+        - src: /templates/service-registry/application.yml
+          dest: /project/service_registry/service_registry.service/service_registry.service.rest/src/main/resources/application.yml
+        - src: /templates/ui/.env
+          dest: /project/ui/.env
+      when: configure_core_project|default(false)|bool == true
+
+    - name: "Copy Keycloak configs"
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - src: /config/keycloak/notification-service/
+          dest: /project/notification_service/notification_service.service/notification_service.service.rest/src/main/resources/keycloak
+        - src: /config/keycloak/resource-registry/
+          dest: /project/resource_registry/resource_registry.service/resource_registry.service.rest/src/main/resources/keycloak
+        - src: /config/keycloak/service-registry/
+          dest: /project/service_registry/service_registry.service/service_registry.service.rest/src/main/resources/keycloak
+      when: configure_core_project|default(false)|bool == true

@@ -1,0 +1,49 @@
+- assert:
+    that:
+      - (keycloak_auth_url is defined) and (keycloak_auth_url|length > 0)
+      - (keycloak_realm is defined) and (keycloak_realm|length > 0)
+      - (keycloak_access_token is defined) and (keycloak_access_token|length > 0)
+      - (keycloak_realm_role is defined) and (keycloak_realm_role|length > 0)
+
+- name: "Create realm role '{{ keycloak_realm_role }}'"
+  uri:
+    url: "{{ keycloak_auth_url }}/admin/realms/{{ keycloak_realm }}/roles"
+    method: POST
+    headers:
+      authorization: "Bearer {{ keycloak_access_token }}"
+    body_format: json
+    body:
+      name: "{{ keycloak_realm_role.name }}"
+    status_code: 201, 409
+  register: output_post_realm_role
+  changed_when: output_post_realm_role.status == 201
+
+- name: "Get default realm roles"
+  uri:
+    url: "{{ keycloak_auth_url }}/admin/realms/{{ keycloak_realm }}"
+    method: GET
+    headers:
+      authorization: "Bearer {{ keycloak_access_token }}"
+  register: output_get_realm
+  when: keycloak_realm_role.isDefault
+
+- set_fact:
+    default_roles: "{{ output_get_realm.json.defaultRoles }}"
+  when: keycloak_realm_role.isDefault
+- set_fact:
+    default_roles: "{{ (default_roles + [item.name]) | unique }}"
+  when: keycloak_realm_role.isDefault
+
+- name: "Set default roles of realm"
+  uri:
+    url: "{{ keycloak_auth_url }}/admin/realms/{{ keycloak_realm }}"
+    method: PUT
+    headers:
+      authorization: "Bearer {{ keycloak_access_token }}"
+    body_format: json
+    body:
+      defaultRoles: "{{ default_roles }}"
+    status_code: 204
+  register: output_get_realm
+  when: keycloak_realm_role.isDefault
+
