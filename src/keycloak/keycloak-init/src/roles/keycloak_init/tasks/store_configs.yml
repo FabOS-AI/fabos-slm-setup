@@ -27,7 +27,7 @@
         dest: "{{ keycloak_client_configs_store_directory }}/realm"
     - name: "Copy Keycloak username into file '{{ keycloak_client_configs_store_directory }}/username'"
       copy:
-        content: "{{ keycloak_default_user }}"
+        content: "{{ keycloak_default_user.username }}"
         dest: "{{ keycloak_client_configs_store_directory }}/username"
     - name: "Copy Keycloak password into file '{{ keycloak_client_configs_store_directory }}/password'"
       copy:
