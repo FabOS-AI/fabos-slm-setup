@@ -4,10 +4,12 @@ Compose files of the stack can be found in the sub-directory `compose`.
 
 Get latest version via Git:
 ```sh
-git clone --filter=blob:none --no-checkout --depth 1 https://github.com/FabOS-AI/fabos-slm-setup && \
+mkdir fabos-slm-setup && \
 cd fabos-slm-setup && \
-git sparse-checkout init --cone && \
+git init && \
+git remote add -f origin git@github.com:FabOS-AI/fabos-slm-setup.git && \
 git sparse-checkout set compose && \
+git pull origin main && \
 cd compose
 ```
 
