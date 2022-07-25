@@ -18,6 +18,9 @@ jobs:
       - name: Build AWX Web docker image
         working-directory: ./compose
         run: docker-compose -f build.yml -f docker-compose.yml build --no-cache awx-web
+      - name: Build AWX Web No JWT docker image
+        working-directory: ./compose
+        run: docker-compose -f build.yml build --no-cache awx-web-no-jwt
       - name: Build AWX Task docker image
         working-directory: ./compose
         run: docker-compose -f build.yml -f docker-compose.yml build --no-cache awx-task
