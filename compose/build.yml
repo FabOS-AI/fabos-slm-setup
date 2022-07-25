@@ -10,7 +10,7 @@ services:
     build: ../src/awx/awx-web
 
   awx-web-no-jwt:
-    image: fabos4ai/slm-awx-web-no-jwt:${SLM_VERSION}
+    image: fabos4ai/slm-awx-web-no-jwt:${AWX_VERSION}
     build: ../src/awx/awx-web-no-jwt
 
   awx-task:
