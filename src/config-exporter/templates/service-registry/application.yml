@@ -27,11 +27,11 @@ springdoc:
 
 ### Database
 database:
-  host: 127.0.0.1
-  port: 3307
-  schema: service_registry
-  username: service_registry
-  password: OCXmsHX38hqgesCa
+  host: {{ target_host }}
+  port: 3320
+  schema: {{ service_registry_database_schema }}
+  username: {{ service_registry_database_user }}
+  password: {{ service_registry_database_password }}
 logging.level.org.hibernate.SQL: TRACE
 
 ### Spring

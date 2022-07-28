@@ -1,7 +1,7 @@
 FROM mariadb:10.5
 
-ENV MYSQL_DATABASE=keycloak \
-    MYSQL_USER=keycloak
+ENV MYSQL_DATABASE=default-schema \
+    MYSQL_USER=defaultUser
 
 COPY startup.sh /opt/startup.sh
 

@@ -193,8 +193,32 @@ services:
       - consul_config_resource-registry:/app/consul:ro
       - keycloak_config_resource-registry:/app/keycloak:ro
       - vault_config_resource-registry:/app/vault:ro
+      - resource-registry-database_config:/app/database/config
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:9010/swagger-ui/index.html" ]
+
+  resource-registry-database:
+    image: fabos4ai/mariadb:${RESOURCE_REGISTRY_DATABASE_VERSION}
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: ${LOGGING_MAX_FILE}
+        max-size: ${LOGGING_MAX_SIZE}
+    ports:
+      - "${RESOURCE_REGISTRY_DATABASE_PORT}:3306"
+    networks:
+      default:
+        aliases:
+          - resource-registry-database
+    environment:
+      MYSQL_USER: resource-registry
+      MYSQL_DATABASE: resources
+    volumes:
+      - resource-registry-database_data:/var/lib/mysql
+      - resource-registry-database_config:/config
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "--silent" ]
 
   service-registry:
     image: fabos4ai/slm-service-registry:${SLM_VERSION}
@@ -221,6 +245,7 @@ services:
       - consul_config_service-registry:/app/consul:ro
       - keycloak_config_service-registry:/app/keycloak:ro
       - vault_config_service-registry:/app/vault:ro
+      - service-registry-database_config:/app/database/config
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:9020/swagger-ui/index.html" ]
 
@@ -241,24 +266,25 @@ services:
       - ./init/service-registry:/init
 
   service-registry-database:
-    image: mariadb:${SERVICE_REGISTRY_DATABASE_VERSION}
+    image: fabos4ai/mariadb:${SERVICE_REGISTRY_DATABASE_VERSION}
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-file: ${LOGGING_MAX_FILE}
         max-size: ${LOGGING_MAX_SIZE}
+    ports:
+      - "${SERVICE_REGISTRY_DATABASE_PORT}:3306"
     networks:
       default:
         aliases:
           - service-registry-database
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: service_registry
+      MYSQL_USER: service-registry
+      MYSQL_DATABASE: services
     volumes:
-      - service-registry_data:/var/lib/mysql
+      - service-registry-database_data:/var/lib/mysql
+      - service-registry-database_config:/config
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "--silent" ]
 
@@ -285,22 +311,28 @@ services:
     volumes:
       - awx_config_notification-service:/app/awx:ro
       - keycloak_config_notification-service:/app/keycloak:ro
+      - notification-service-database_config:/app/database/config
 
   notification-service-database:
-    image: mariadb:${NOTIFICATION_SERVICE_DATABASE_VERSION}
+    image: fabos4ai/mariadb:${NOTIFICATION_SERVICE_DATABASE_VERSION}
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-file: ${LOGGING_MAX_FILE}
         max-size: ${LOGGING_MAX_SIZE}
+    ports:
+      - "${NOTIFICATION_SERVICE_DATABASE_PORT}:3306"
+    networks:
+      default:
+        aliases:
+          - notification-service-database
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: notification-service
       MYSQL_DATABASE: notifications
     volumes:
-      - notification-service_data:/var/lib/mysql
+      - notification-service-database_data:/var/lib/mysql
+      - notification-service-database_config:/config
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "--silent" ]
   ###endregion Custom Service Lifecycle Components
@@ -351,7 +383,7 @@ services:
       - "${SLM_HOSTNAME}:172.17.0.1"
 
   keycloak-database:
-    image: fabos4ai/slm-keycloak-database:${KEYCLOAK_DATABASE_VERSION}
+    image: fabos4ai/mariadb:${KEYCLOAK_DATABASE_VERSION}
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -360,13 +392,16 @@ services:
         max-size: ${LOGGING_MAX_SIZE}
     volumes:
       - keycloak-database_data:/var/lib/mysql
-      - keycloak-database_config:/keycloak/database/config
+      - keycloak-database_config:/config
     ports:
       - "4406:3306"
     networks:
       default:
         aliases:
           - keycloak-database
+    environment:
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
   ###endregion Keycloak
@@ -478,9 +513,12 @@ networks:
   default:
 
 volumes:
-  notification-service_data:
-  resource-registry_data:
-  service-registry_data:
+  notification-service-database_data:
+  notification-service-database_config:
+  resource-registry-database_data:
+  resource-registry-database_config:
+  service-registry-database_data:
+  service-registry-database_config:
   keycloak-database_data:
   keycloak-database_config:
   keycloak_config_awx-jwt-proxy:

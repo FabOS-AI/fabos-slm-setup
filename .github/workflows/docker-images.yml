@@ -38,12 +38,12 @@ jobs:
     strategy:
       matrix:
         service:
+          - common-database-mariadb
           - awx-postgres
           - awx-init
           - consul
           - consul-init
           - keycloak
-          - keycloak-database
           - keycloak-init
           - vault
           - vault-init

@@ -2,6 +2,10 @@ version: '3'
 
 services:
 
+  common-database-mariadb:
+    image: fabos4ai/mariadb:10.5
+    build: ../src/common/database/mariadb
+
   awx-fixed-files:
     image: fabos4ai/slm-awx-fixed-files:${AWX_VERSION}
     build: ../src/awx/awx-fixed-files
@@ -27,9 +31,6 @@ services:
 
   keycloak-init:
     build: ../src/keycloak/keycloak-init
-
-  keycloak-database:
-    build: ../src/keycloak/keycloak-db
 
   vault:
     build: ../src/vault/vault

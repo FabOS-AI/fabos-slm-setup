@@ -43,9 +43,27 @@ vault:
 
 notification-service:
   url: "http://{{ notification_service_host }}:{{ notification_service_port }}"
+  database:
+    host: {{ target_host }}
+    port: 3301
+    schema: {{ notification_service_database_schema }}
+    username: {{ notification_service_database_user }}
+    password: {{ notification_service_database_password }}
 
 resource-registry:
   url: "http://{{ resource_registry_host }}:{{ resource_registry_port }}"
+  database:
+    host: {{ target_host }}
+    port: 3310
+    schema: {{ resource_registry_database_schema }}
+    username: {{ resource_registry_database_user }}
+    password: {{ resource_registry_database_password }}
 
 service-registry:
   url: "http://{{ service_registry_host }}:{{ service_registry_port }}"
+  database:
+    host: {{ target_host }}
+    port: 3320
+    schema: {{ service_registry_database_schema }}
+    username: {{ service_registry_database_user }}
+    password: {{ service_registry_database_password }}

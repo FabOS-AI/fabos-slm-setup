@@ -27,11 +27,11 @@ springdoc:
 
 ### Database
 database:
-  host: 127.0.0.1
-  port: 3308
-  schema: notifications
-  username: notification_service
-  password: bbf559a7780e4e2f
+  host: {{ target_host }}
+  port: 3301
+  schema: {{ notification_service_database_schema }}
+  username: {{ notification_service_database_user }}
+  password: {{ notification_service_database_password }}
 
 ### Spring
 spring:

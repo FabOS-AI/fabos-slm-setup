@@ -25,15 +25,19 @@ springdoc:
     tags-sorter: alpha
     operations-sorter: alpha
 
+### Database
+database:
+  host: {{ target_host }}
+  port: 3310
+  schema: {{ resource_registry_database_schema }}
+  username: {{ resource_registry_database_user }}
+  password: {{ resource_registry_database_password }}
+logging.level.org.hibernate.SQL: TRACE
+
 ### Spring
 spring:
   application:
     name: resource_registry
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -45,6 +49,16 @@ spring:
     user:
       name: "user"
       password: "password"
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    platform: mysql
+    initialization-mode: always
+    driver-class-name=org: 'mariadb.jdbc.Driver'
+    url: jdbc:mariadb://${database.host}:${database.port}/${database.schema}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${database.username}
+    password: ${database.password}
 
 ### Components - Internal
 notification-service:
