@@ -231,6 +231,8 @@ services:
       options:
         max-file: ${LOGGING_MAX_FILE}
         max-size: ${LOGGING_MAX_SIZE}
+    environment:
+      KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
     extra_hosts:
       - "${SLM_HOSTNAME}:172.17.0.1"
 
