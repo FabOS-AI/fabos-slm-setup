@@ -214,11 +214,25 @@ services:
     environment:
       MYSQL_USER: resource-registry
       MYSQL_DATABASE: resources
+      KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
     volumes:
       - resource-registry-database_data:/var/lib/mysql
       - resource-registry-database_config:/config
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "--silent" ]
+
+  resource-registry-init:
+    image: fabos4ai/slm-resource-registry-init:${SLM_VERSION}
+    restart: "no"
+    depends_on:
+      - resource-registry
+    logging:
+      driver: "json-file"
+      options:
+        max-file: ${LOGGING_MAX_FILE}
+        max-size: ${LOGGING_MAX_SIZE}
+    extra_hosts:
+      - "${SLM_HOSTNAME}:172.17.0.1"
 
   service-registry:
     image: fabos4ai/slm-service-registry:${SLM_VERSION}
