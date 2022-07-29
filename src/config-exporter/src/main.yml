@@ -80,8 +80,12 @@
           dest: /project/notification_service/notification_service.service/notification_service.service.rest/src/main/resources/application.yml
         - src: /templates/resource-registry/application.yml
           dest: /project/resource_registry/resource_registry.service/resource_registry.service.rest/src/main/resources/application.yml
+        - src: /templates/resource-registry-initializer/application.yml
+          dest: /project/resource_registry/resource_registry.service/resource_registry.service.initializer/src/main/resources/application.yml
         - src: /templates/service-registry/application.yml
           dest: /project/service_registry/service_registry.service/service_registry.service.rest/src/main/resources/application.yml
+        - src: /templates/service-registry-initializer/application.yml
+          dest: /project/service_registry/service_registry.service/service_registry.service.initializer/src/main/resources/application.yml
         - src: /templates/ui/.env
           dest: /project/ui/.env
       when: configure_core_project|default(false)|bool == true

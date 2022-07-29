@@ -32,7 +32,6 @@ database:
   schema: {{ resource_registry_database_schema }}
   username: {{ resource_registry_database_user }}
   password: {{ resource_registry_database_password }}
-logging.level.org.hibernate.SQL: TRACE
 
 ### Spring
 spring:
