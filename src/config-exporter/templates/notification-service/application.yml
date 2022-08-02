@@ -24,6 +24,9 @@ springdoc:
     disable-swagger-default-url: true
     tags-sorter: alpha
     operations-sorter: alpha
+    oauth:
+      clientId: self-service-portal
+      clientSecret: unused-and-not-required
 
 ### Database
 database:
