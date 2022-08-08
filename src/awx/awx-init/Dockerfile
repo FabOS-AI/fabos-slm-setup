@@ -4,8 +4,6 @@ FROM fabos4ai/ansible-core:2.11.9
 ENV AWX_URL=http://awxweb:8052 \
     AWX_ADMIN_USERNAME=admin \
     AWX_ADMIN_PASSWORD=password \
-    AWX_SCM_USERNAME=SCMDefaultUser \
-    AWX_SCM_PASSWORD=SCMDefaultPassword \
     CONSUL_CONFIG_VIA=SHARED_VOLUME \
 #    CONSUL_CONFIG_VIA=ENVIRONMENT_VARIABLES \
 #    CONSUL_TOKEN=password \

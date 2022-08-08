@@ -61,41 +61,7 @@ awx_credentials:
       vault_approle_role_id: "{{ vault_approle_role_id }}"
       vault_approle_secret_id: "{{ vault_approle_secret_id }}"
 
-ansible_projects_and_templates:
-  - project_name: "Docker"
-    project_description: "Docker"
-    scm_url: "https://github.com/FabOS-AI/fabos-slm-dc-docker.git"
-    scm_branch: 1.0.0
-    scm_update_on_launch: false
-    job_templates:
-      - { template_name: "Docker - Install", playbook: "install.yml" }
-      - { template_name: "Docker - Uninstall", playbook: "uninstall.yml" }
-      - { template_name: "Docker - Deploy", playbook: "deploy.yml" }
-      - { template_name: "Docker - Undeploy", playbook: "undeploy.yml" }
-  - project_name: "Docker Swarm"
-    project_description: "Docker Swarm"
-    scm_url: "https://github.com/FabOS-AI/fabos-slm-dc-docker-swarm.git"
-    scm_branch: 1.0.0
-    scm_update_on_launch: false
-    job_templates:
-      - { template_name: "Docker Swarm - Install", playbook: "install.yml" }
-      - { template_name: "Docker Swarm - Uninstall", playbook: "uninstall.yml" }
-      - { template_name: "Docker Swarm - Scale Up", playbook: "scaleup.yml" }
-      - { template_name: "Docker Swarm - Scale Down", playbook: "scaledown.yml" }
-      - { template_name: "Docker Swarm - Deploy", playbook: "deploy.yml" }
-      - { template_name: "Docker Swarm - Undeploy", playbook: "undeploy.yml" }
-  - project_name: "K3s"
-    project_description: "K3s"
-    scm_url: "https://github.com/FabOS-AI/fabos-slm-dc-k3s.git"
-    scm_branch: 1.0.0
-    scm_update_on_launch: false
-    job_templates:
-      - { template_name: "K3s - Install", playbook: "install.yml" }
-      - { template_name: "K3s - Uninstall", playbook: "uninstall.yml" }
-      - { template_name: "K3s - Scale Up", playbook: "scaleup.yml" }
-      - { template_name: "K3s - Scale Down", playbook: "scaledown.yml" }
-      - { template_name: "K3s - Deploy", playbook: "deploy.yml" }
-      - { template_name: "K3s - Undeploy", playbook: "undeploy.yml" }
+ansible_projects_and_templates: []
 
 consul_config_directory: "/config/consul"
 consul_token_file: "{{ consul_config_directory }}/consul_token"
