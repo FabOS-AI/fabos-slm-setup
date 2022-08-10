@@ -85,7 +85,9 @@ keycloak:
 
 ### AWX
 awx:
-  url: {{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}
+  scheme: {{ awx_scheme }}
+  host: {{ awx_hostname }}
+  port: {{ awx_port }}
   username: {{ awx_resource_registry_username }}
   password: {{ awx_resource_registry_password }}
 

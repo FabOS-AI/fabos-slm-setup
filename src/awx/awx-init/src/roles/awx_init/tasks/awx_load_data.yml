@@ -3,8 +3,6 @@
       - awx_url
       - awx_admin_user
       - awx_admin_password
-      - awx_scm_username
-      - awx_scm_password
       - awx_jwt_proxy_awx_username
       - awx_jwt_proxy_awx_password
       - consul_token
@@ -99,6 +97,7 @@
     inputs:
       username: "{{ awx_scm_username }}"
       password: "{{ awx_scm_password }}"
+  when: (awx_scm_username is defined) and (awx_scm_username|length > 0) and (awx_scm_password is defined) and (awx_scm_password|length > 0)
 
 - name: "Create default inventory"
   awx.awx.inventory:

@@ -21,7 +21,7 @@ keycloak:
     bearer-only: true
 
 awx:
-    hostname: {{ awx_hostname }}
+    host: {{ awx_hostname }}
     scheme: {{ awx_scheme }}
     port: {{ awx_port }}
     username: {{ awx_jwt_proxy_username }}

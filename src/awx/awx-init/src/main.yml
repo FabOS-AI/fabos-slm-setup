@@ -31,8 +31,6 @@
               - (awx_admin_user is defined) and (awx_admin_user|length > 0)
               - (awx_admin_username is defined) and (awx_admin_username|length > 0)
               - (awx_admin_password is defined) and (awx_admin_password|length > 0)
-              - (awx_scm_username is defined) and (awx_scm_username|length > 0)
-              - (awx_scm_password is defined) and (awx_scm_password|length > 0)
               - (awx_jwt_proxy_awx_username is defined) and (awx_jwt_proxy_awx_username|length > 0)
               - (awx_jwt_proxy_awx_password is defined) and (awx_jwt_proxy_awx_password|length > 0)
             fail_msg: "Variable must be defined and not empty"
