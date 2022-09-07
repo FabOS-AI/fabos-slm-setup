@@ -268,8 +268,6 @@ services:
   service-registry-init:
     image: fabos4ai/slm-service-registry-init:${SLM_VERSION}
     restart: "no"
-    depends_on:
-      - service-registry
     logging:
       driver: "json-file"
       options:
@@ -279,7 +277,9 @@ services:
       - "${SLM_HOSTNAME}:172.17.0.1"
     volumes:
       - keycloak_config_service-registry-init:/app/keycloak
-      - ./init/service-registry:/init
+    environment:
+      SERVICEREGISTRY_INITDIRECTORIES: ${SERVICE_REGISTRY_INITIALIZATION_LOCAL_DIRECTORIES}
+      SERVICEREGISTRY_GITREPOS_URLS: ${SERVICE_REGISTRY_INITIALIZATION_GIT_REPOS}
 
   service-registry-database:
     image: fabos4ai/mariadb:${SERVICE_REGISTRY_DATABASE_VERSION}

@@ -1,6 +1,9 @@
 service-registry:
   url: http://{{ service_registry_host }}:{{ service_registry_port }}
   init-directory: init-public/,init-private/
+  git-repos:
+    urls: "https://github.com/FabOS-AI/fabos-slm-service-registry-content.git"
+    clone-directory: tmp/
 
 keycloak:
   auth-server-url: {{ keycloak_auth_server_url }}
