@@ -1,6 +1,6 @@
 service-registry:
   url: http://{{ service_registry_host }}:{{ service_registry_port }}
-  init-directory: init-public/,init-private/
+  init-directories: init-public/,init-private/
   git-repos:
     urls: "https://github.com/FabOS-AI/fabos-slm-service-registry-content.git"
     clone-directory: tmp/
