@@ -68,6 +68,8 @@
          dest: /project/_config_generated/slm-config.yml
        - src: /templates/insomnia-env.json
          dest: /project/_config_generated/insomnia-env.json
+       - src: /templates/postman-env.json
+         dest: /project/_config_generated/postman-env.json
 
     - name: "Copy application properties"
       template:
