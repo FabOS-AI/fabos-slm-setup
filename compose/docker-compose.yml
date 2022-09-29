@@ -508,7 +508,7 @@ services:
       - "${SLM_HOSTNAME}:172.17.0.1"
 
   consul-esm:
-    image: hashicorp/consul-esm:0.6.1
+    image: hashicorp/consul-esm:${CONSUL_ESM_VERSION}
     restart: unless-stopped
     logging:
       driver: "json-file"
