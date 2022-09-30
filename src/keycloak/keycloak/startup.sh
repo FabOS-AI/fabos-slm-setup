@@ -1,7 +1,7 @@
 #! /bin/bash
 
-export KEYCLOAK_USER="$KEYCLOAK_ADMIN_USER"
-export KEYCLOAK_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
+export KEYCLOAK_ADMIN="$KEYCLOAK_ADMIN_USER"
+export KEYCLOAK_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
 
 KEYCLOAK_DATABASE_CONFIGDIR="/keycloak/database/config"
 
@@ -11,6 +11,6 @@ while [ -z "$(ls -A $KEYCLOAK_DATABASE_CONFIGDIR)" ]; do
   sleep 3
 done
 
-export DB_PASSWORD=$(cat "$KEYCLOAK_DATABASE_CONFIGDIR/password")
+export KC_DB_PASSWORD=$(cat "$KEYCLOAK_DATABASE_CONFIGDIR/password")
 
-bash /opt/jboss/tools/docker-entrypoint.sh -b "0.0.0.0"
+bash /opt/keycloak/bin/kc.sh start-dev --db mariadb --transaction-xa-enabled=false --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true

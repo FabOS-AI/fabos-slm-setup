@@ -366,6 +366,8 @@ services:
       - "${KEYCLOAK_PORT}:8080"
     depends_on:
       - keycloak-database
+    environment:
+      KC_HOSTNAME: ${SLM_HOSTNAME}
     volumes:
       - keycloak-database_config:/keycloak/database/config
     networks:

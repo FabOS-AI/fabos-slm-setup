@@ -17,33 +17,3 @@
     status_code: 201, 409
   register: output_post_realm_role
   changed_when: output_post_realm_role.status == 201
-
-- name: "Get default realm roles"
-  uri:
-    url: "{{ keycloak_auth_url }}/admin/realms/{{ keycloak_realm }}"
-    method: GET
-    headers:
-      authorization: "Bearer {{ keycloak_access_token }}"
-  register: output_get_realm
-  when: keycloak_realm_role.isDefault
-
-- set_fact:
-    default_roles: "{{ output_get_realm.json.defaultRoles }}"
-  when: keycloak_realm_role.isDefault
-- set_fact:
-    default_roles: "{{ (default_roles + [item.name]) | unique }}"
-  when: keycloak_realm_role.isDefault
-
-- name: "Set default roles of realm"
-  uri:
-    url: "{{ keycloak_auth_url }}/admin/realms/{{ keycloak_realm }}"
-    method: PUT
-    headers:
-      authorization: "Bearer {{ keycloak_access_token }}"
-    body_format: json
-    body:
-      defaultRoles: "{{ default_roles }}"
-    status_code: 204
-  register: output_get_realm
-  when: keycloak_realm_role.isDefault
-
