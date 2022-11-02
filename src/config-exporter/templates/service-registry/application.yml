@@ -58,6 +58,12 @@ spring:
     username: ${database.username}
     password: ${database.password}
 
+### Git
+git:
+  service-offering-importer:
+    clone-directory: tmp/
+    updater-interval-minutes: 15
+
 ### Components - Internal
 notification-service:
   scheme: "http"
