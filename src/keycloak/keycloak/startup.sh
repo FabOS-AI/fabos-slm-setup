@@ -1,8 +1,5 @@
 #! /bin/bash
 
-export KEYCLOAK_ADMIN="$KEYCLOAK_ADMIN"
-export KEYCLOAK_ADMIN_PASSWORD="$KEYCLOAK_ADMIN_PASSWORD"
-
 KEYCLOAK_DATABASE_CONFIGDIR="/keycloak/database/config"
 
 # Wait until Keycloak configuration is present
