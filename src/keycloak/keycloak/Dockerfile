@@ -5,7 +5,7 @@ ENV KC_DB_HOST=keycloak-database \
     KC_DB_SCHEMA=keycloak \
     KC_DB_USERNAME=keycloak \
     KC_DB_PASSWORD=password \
-    KEYCLOAK_ADMIN_USER=admin \
+    KEYCLOAK_ADMIN=admin \
     KEYCLOAK_ADMIN_PASSWORD=password \
     KC_HTTP_RELATIVE_PATH=/auth
 
