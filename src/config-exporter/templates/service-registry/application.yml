@@ -62,6 +62,12 @@ spring:
       mode: always
       platform: mysql
 
+management:
+  endpoints:
+    web.exposure.include: health,info
+  info:
+    git.enabled: false
+
 ### Git
 git:
   service-offering-importer:
