@@ -62,6 +62,12 @@ spring:
     username: ${database.username}
     password: ${database.password}
 
+management:
+  endpoints:
+    web.exposure.include: health,info
+  info:
+    git.enabled: false
+
 ### Components - Internal
 notification-service:
   scheme: "http"

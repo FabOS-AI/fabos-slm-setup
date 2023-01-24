@@ -20,6 +20,7 @@ services:
       - "${SLM_HOSTNAME}:172.17.0.1"
     environment:
       VUE_APP_KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      VUE_APP_AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:8080" ]
 
@@ -101,6 +102,7 @@ services:
         max-size: ${LOGGING_MAX_SIZE}
     environment:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      GIT_SERVICEOFFERINGIMPORTER_UPDATERINTERVALMINUTES: "${SERVICE_REGISTRY_GIT_CHECK_INTERVAL_MINUTES}"
     ports:
       - "${SERVICE_REGISTRY_PORT}:9020"
     networks:
