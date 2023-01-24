@@ -16,7 +16,7 @@ vault_approles:
     config_store_directory: "{{ vault_config_directory }}/awx"
     policies:
       - name: "awx"
-        policy: "path \"resources/*\" { capabilities = [\"read\", \"list\"] } \npath \"service-repositories/*\" { capabilities = [\"read\", \"list\"] }"
+        policy: "path \"resources/*\" { capabilities = [\"read\", \"list\", \"create\", \"update\"] } \npath \"service-repositories/*\" { capabilities = [\"read\", \"list\"] }"
   - name: awx-jwt-proxy
     config_store_directory: "{{ vault_config_directory }}/awx-jwt-proxy"
     policies:

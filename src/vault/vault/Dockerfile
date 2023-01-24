@@ -1,4 +1,4 @@
-FROM vault:1.8.1
+FROM vault:1.11.3
 
 RUN apk update && \
     apk upgrade && \

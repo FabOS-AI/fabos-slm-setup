@@ -47,16 +47,32 @@ spring:
       name: "user"
       password: "password"
   jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
     hibernate:
-#      ddl-auto: create-drop
       ddl-auto: update
   datasource:
-    platform: mysql
-    initialization-mode: always
     driver-class-name=org: 'mariadb.jdbc.Driver'
     url: jdbc:mariadb://${database.host}:${database.port}/${database.schema}?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: ${database.username}
     password: ${database.password}
+  sql:
+    init:
+      mode: always
+      platform: mysql
+
+management:
+  endpoints:
+    web.exposure.include: health,info
+  info:
+    git.enabled: false
+
+### Git
+git:
+  service-offering-importer:
+    clone-directory: tmp/
+    updater-interval-minutes: 15
 
 ### Components - Internal
 notification-service:

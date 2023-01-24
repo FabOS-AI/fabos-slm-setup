@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  aas-registry:
+    image: eclipsebasyx/aas-registry:1.2.0
+    restart: always
+    depends_on:
+      - aas-database
+    networks:
+      default:
+        aliases:
+          - aas-registry
+    ports:
+      - "4000:4000"
+    environment:
+      basyxregistry_registry_backend: MongoDB
+      basyxmongodb_dbconnectionstring: mongodb://aas-database:27017/
+      basyxcontext_contexthostname: "${SLM_HOSTNAME}"
+      basyxcontext_accesscontrolalloworigin: "*"
+
+  aas-server:
+    image: eclipsebasyx/aas-server:1.2.0
+    restart: always
+    depends_on:
+      - aas-database
+    networks:
+      default:
+        aliases:
+          - aas-server
+    ports:
+      - "4001:4001"
+    environment:
+      basyxaas_registry_path: http://aas-registry:4000/registry/api/v1/registry
+      basyxaas_aas_backend: MongoDB
+      basyxaas_aas_aasxupload: Enabled
+      basyxmongodb_dbconnectionstring: mongodb://aas-database:27017/
+      basyxcontext_contexthostname: "${SLM_HOSTNAME}"
+      basyxcontext_accesscontrolalloworigin: "*"
+      waiting_for: '[{"host":"aas-registry","port":"4000"}]'
+
+  aas-database:
+    image: mongo:latest
+    restart: always
+    networks:
+      default:
+        aliases:
+          - aas-database
+    volumes:
+      - "aas_database:/data/db"
+
+  aas-ui:
+    image: eclipsebasyx/aas-gui:v221024
+    restart: always
+    ports:
+      - "4080:8080"
+
+volumes:
+  aas_database:
