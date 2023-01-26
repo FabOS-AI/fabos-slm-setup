@@ -124,3 +124,10 @@ vault:
     role-id: {{ vault_service_registry_app_role_id }}
     secret-id: {{ vault_service_registry_app_secret_id }}
     app-role-path: approle
+
+### BaSyx
+basyx:
+  aas-server:
+    path: http://localhost:4001/aasServer
+  aas-registry:
+    path: http://localhost:4000/registry
