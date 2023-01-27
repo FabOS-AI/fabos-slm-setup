@@ -48,11 +48,11 @@ services:
     volumes:
       - "aas_database:/data/db"
 
-  aas-ui:
-    image: eclipsebasyx/aas-gui:v221024
+  aas-gui:
+    image: eclipsebasyx/aas-gui:v230113
     restart: always
     ports:
-      - "4080:8080"
+      - "3000:3000"
 
 volumes:
   aas_database:
