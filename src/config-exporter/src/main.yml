@@ -13,6 +13,7 @@
         awx_scheme: "http"
         awx_hostname: "{{ lookup('env', 'SLM_HOSTNAME') }}"
         awx_port:  "{{ lookup('env', 'AWX_PORT_HTTP') }}"
+        awx_url: "{{awx_scheme}}://{{awx_hostname}}:{{awx_port}}/"
         awx_jwt_proxy_username: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_username') }}"
         awx_jwt_proxy_password: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_password') }}"
         awx_notification_service_username: "{{ lookup('file', '/config/awx/notification-service/awx_username') }}"
