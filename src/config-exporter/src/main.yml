@@ -53,6 +53,8 @@
         notification_service_database_user: "{{ lookup('file', '/config/notification-service/database/user') }}"
         notification_service_database_password: "{{ lookup('file', '/config/notification-service/database/password') }}"
         notification_service_database_schema: "{{ lookup('file', '/config/notification-service/database/schema') }}"
+    - set_fact:
+        awx_url: "{{awx_scheme}}://{{awx_hostname}}:{{awx_port}}"
 
     - name: "Ensures /project/_config_generated dir exists"
       file:
