@@ -34,3 +34,4 @@ services:
       - notification-service-database_config:/config/notification-service/database
       - resource-registry-database_config:/config/resource-registry/database
       - service-registry-database_config:/config/service-registry/database
+      - catalog-database_config:/config/catalog/database
