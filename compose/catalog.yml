@@ -23,7 +23,7 @@ services:
     volumes:
       - catalog-database_config:/app/database/config
     healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9000/swagger-ui/index.html" ]
+      test: [ "CMD", "curl", "http://localhost:10000/swagger-ui/index.html" ]
 
   catalog-database:
     image: fabos4ai/mariadb:${SLM_CATALOG_SERVICE_DATABASE_VERSION}
