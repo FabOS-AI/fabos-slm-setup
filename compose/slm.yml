@@ -21,7 +21,6 @@ services:
     environment:
       KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
       AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
-      CATALOG_SERVICE_URL: "http://inno-ecos.de"
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:8080" ]
 
