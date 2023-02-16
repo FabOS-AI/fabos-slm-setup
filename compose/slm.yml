@@ -19,8 +19,9 @@ services:
     extra_hosts:
       - "${SLM_HOSTNAME}:172.17.0.1"
     environment:
-      VUE_APP_KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
-      VUE_APP_AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
+      KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
+      CATALOG_SERVICE_URL: "http://inno-ecos.de"
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:8080" ]
 
