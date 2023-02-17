@@ -64,7 +64,7 @@
         catalog_service_database_schema: "{{ lookup('file', '/config/catalog/database/schema') }}"
     - set_fact:
         awx_url: "{{awx_scheme}}://{{awx_hostname}}:{{awx_port}}"
-        resource_registry_url: "{{resource_registry_scheme}}://{{resource_registry_host}}:{{service_registry_port}}"
+        resource_registry_url: "{{resource_registry_scheme}}://{{resource_registry_host}}:{{resource_registry_port}}"
         service_registry_url: "{{service_registry_scheme}}://{{service_registry_host}}:{{service_registry_port}}"
         notification_service_url: "{{notification_service_scheme}}://{{notification_service_host}}:{{notification_service_port}}"
         catalog_service_url: "{{catalog_service_scheme}}://{{catalog_service_host}}:{{catalog_service_port}}"
