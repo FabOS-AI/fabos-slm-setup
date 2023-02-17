@@ -34,6 +34,8 @@ services:
         max-size: ${LOGGING_MAX_SIZE}
     environment:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      BASYX_AASREGISTRY_PATH: "http://${SLM_HOSTNAME}:4000"
+      BASYX_AASSERVER_PATH: "http://${SLM_HOSTNAME}:4001"
     ports:
       - "${RESOURCE_REGISTRY_PORT}:9010"
     networks:
@@ -103,6 +105,8 @@ services:
     environment:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
       GIT_SERVICEOFFERINGIMPORTER_UPDATERINTERVALMINUTES: "${SERVICE_REGISTRY_GIT_CHECK_INTERVAL_MINUTES}"
+      BASYX_AASREGISTRY_PATH: "http://${SLM_HOSTNAME}:4000"
+      BASYX_AASSERVER_PATH: "http://${SLM_HOSTNAME}:4001"
     ports:
       - "${SERVICE_REGISTRY_PORT}:9020"
     networks:
