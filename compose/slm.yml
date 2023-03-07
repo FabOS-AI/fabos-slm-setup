@@ -21,6 +21,7 @@ services:
     environment:
       KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
       AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
+      BASYX_AAS_GUI_URL: "http://${SLM_HOSTNAME}:3000"
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:8080" ]
 
