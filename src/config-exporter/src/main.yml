@@ -100,6 +100,7 @@
         - src: /templates/ui/.env
           dest: /project/ui/.env
       when: configure_core_project|default(false)|bool == true
+      ignore_errors: true
 
     - name: "Copy Keycloak configs"
       copy:
