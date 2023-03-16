@@ -20,18 +20,6 @@
       "enabled": true
     },
     {
-      "key": "awx.jwt-proxy.vault.role-id",
-      "value": "{{ vault_awx_jwt_proxy_app_role_id }}",
-      "type": "default",
-      "enabled": true
-    },
-    {
-      "key": "awx.jwt-proxy.vault.role-secret-id",
-      "value": "{{ vault_awx_jwt_proxy_app_secret_id }}",
-      "type": "default",
-      "enabled": true
-    },
-    {
       "key": "keycloak.url",
       "value": "{{ keycloak_auth_server_url }}",
       "type": "default",
