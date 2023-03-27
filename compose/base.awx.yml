@@ -71,9 +71,9 @@ services:
         aliases:
           - awx-jwt-authenticator
     volumes:
-      - vault_config_awx-jwt-proxy:/opt/vault/awx-jwt-proxy:ro
-      - awx_config_jwt-proxy:/app/awx
-      - keycloak_config_awx-jwt-proxy:/app/keycloak
+      - vault_config_awx-jwt-authenticator:/opt/vault/awx-jwt-authenticator:ro
+      - awx_config_jwt-authenticator:/app/awx
+      - keycloak_config_awx-jwt-authenticator:/app/keycloak
     extra_hosts:
       - "${SLM_HOSTNAME}:172.17.0.1"
 
@@ -143,7 +143,7 @@ services:
       - awx_config_notification-service:/config/notification-service
       - awx_config_resource-registry:/config/resource-registry
       - awx_config_service-registry:/config/service-registry
-      - awx_config_jwt-proxy:/config/awx-jwt-proxy
+      - awx_config_jwt-authenticator:/config/awx-jwt-authenticator
       - consul_config_awx:/config/consul
       - vault_config_awx:/config/vault
 
@@ -156,4 +156,4 @@ volumes:
   awx_config_notification-service:
   awx_config_resource-registry:
   awx_config_service-registry:
-  awx_config_jwt-proxy:
+  awx_config_jwt-authenticator:

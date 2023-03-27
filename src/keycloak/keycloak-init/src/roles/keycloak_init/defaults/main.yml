@@ -1,8 +1,8 @@
 keycloak_clients:
-  - client_id: awx-jwt-proxy
+  - client_id: awx-jwt-authenticator
     public_client: false
     service_accounts_enabled: false
-    oidc_installation_json_output_path_local: "/config/awx-jwt-proxy"
+    oidc_installation_json_output_path_local: "/config/awx-jwt-authenticator"
   - client_id: self-service-portal
     public_client: true
     service_accounts_enabled: false

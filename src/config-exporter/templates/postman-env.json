@@ -14,7 +14,7 @@
       "enabled": true
     },
     {
-      "key": "awx.jwt-proxy.url",
+      "key": "awx.jwt-authenticator.url",
       "value": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}",
       "type": "default",
       "enabled": true

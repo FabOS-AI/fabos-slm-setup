@@ -2,8 +2,8 @@
   "awx": {
     "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
   },
-  "awx-jwt-proxy": {
-    "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}",
+  "awx-jwt-authenticator": {
+    "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
   },
   "consul": {
     "url": "{{ consul_scheme }}://{{ consul_hostname }}:{{ consul_port }}/v1",

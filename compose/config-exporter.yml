@@ -10,7 +10,7 @@ services:
       - .env
     volumes:
       - ./config:/project
-      - keycloak_config_awx-jwt-proxy:/config/keycloak/awx-jwt-proxy
+      - keycloak_config_awx-jwt-authenticator:/config/keycloak/awx-jwt-authenticator
       - keycloak_config_notification-service:/config/keycloak/notification-service
       - keycloak_config_resource-registry:/config/keycloak/resource-registry
       - keycloak_config_service-registry:/config/keycloak/service-registry
@@ -22,14 +22,14 @@ services:
 
       - vault_config_root:/config/vault/root
       - vault_config_awx:/config/vault/awx
-      - vault_config_awx-jwt-proxy:/config/vault/awx-jwt-proxy
+      - vault_config_awx-jwt-authenticator:/config/vault/awx-jwt-authenticator
       - vault_config_service-registry:/config/vault/service-registry
       - vault_config_resource-registry:/config/vault/resource-registry
 
       - awx_config_notification-service:/config/awx/notification-service
       - awx_config_resource-registry:/config/awx/resource-registry
       - awx_config_service-registry:/config/awx/service-registry
-      - awx_config_jwt-proxy:/config/awx/awx-jwt-proxy
+      - awx_config_jwt-authenticator:/config/awx/awx-jwt-authenticator
 
       - notification-service-database_config:/config/notification-service/database
       - resource-registry-database_config:/config/resource-registry/database

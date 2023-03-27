@@ -3,8 +3,8 @@
       - awx_url
       - awx_admin_user
       - awx_admin_password
-      - awx_jwt_proxy_awx_username
-      - awx_jwt_proxy_awx_password
+      - awx_jwt_authenticator_awx_username
+      - awx_jwt_authenticator_awx_password
       - consul_token
       - vault_approle_role_id
       - vault_approle_secret_id
@@ -40,17 +40,17 @@
     description: ""
     state: present
 
-###region AWX JWT Proxy
-- name: "Add user '{{ awx_jwt_proxy_awx_username }}'"
+###region AWX JWT Authenticator
+- name: "Add user '{{ awx_jwt_authenticator_awx_username }}'"
   awx.awx.user:
     controller_host: "{{ awx_url }}"
     controller_username: "{{ awx_admin_username }}"
     controller_password: "{{ awx_admin_password }}"
-    username: "{{ awx_jwt_proxy_awx_username }}"
-    password: "{{ awx_jwt_proxy_awx_password }}"
-    email: "{{ awx_jwt_proxy_awx_username }}@fab-os.org"
+    username: "{{ awx_jwt_authenticator_awx_username }}"
+    password: "{{ awx_jwt_authenticator_awx_password }}"
+    email: "{{ awx_jwt_authenticator_awx_username }}@fab-os.org"
     first_name: AWX
-    last_name: JWT Proxy
+    last_name: JWT Authenticator
     superuser: yes
     state: present
 
@@ -58,29 +58,29 @@
   vars:
     awx_username: "{{ awx_admin_username }}"
     awx_password: "{{ awx_admin_password }}"
-    awx_application_name: "awx-jwt-proxy"
-    awx_application_description: "AWX JWT Proxy"
+    awx_application_name: "awx-jwt-authenticator"
+    awx_application_description: "AWX JWT Authenticator"
     awx_organization_name: "{{ awx_slm_organization_name }}"
 
 - name: "Save AWX JWT credentials to file"
   copy:
     content: "{{ item.value }}"
-    dest: "/config/awx-jwt-proxy/{{ item.filename }}"
+    dest: "/config/awx-jwt-authenticator/{{ item.filename }}"
   with_items:
-    - { value: "{{ awx_jwt_proxy_awx_username }}", filename: "awx_username" }
-    - { value: "{{ awx_jwt_proxy_awx_password }}", filename: "awx_password" }
+    - { value: "{{ awx_jwt_authenticator_awx_username }}", filename: "awx_username" }
+    - { value: "{{ awx_jwt_authenticator_awx_password }}", filename: "awx_password" }
   no_log: true
 
-- name: "Create team in which AWX JWT Proxy can add new users"
+- name: "Create team in which AWX JWT Authenticator can add new users"
   awx.awx.team:
     controller_host: "{{ awx_url }}"
     controller_username: "{{ awx_admin_user }}"
     controller_password: "{{ awx_admin_password }}"
     name: "user"
-    description: "Team for users added by AWX JWT Proxy"
+    description: "Team for users added by AWX JWT Authenticator"
     organization: "{{ awx_slm_organization_name }}"
     state: present
-###endregion AWX JWT Proxy
+###endregion AWX JWT Authenticator
 
 - set_fact:
     awx_scm_credential_name: "SCM Credentials"

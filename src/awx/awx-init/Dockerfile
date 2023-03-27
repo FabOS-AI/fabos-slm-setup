@@ -11,8 +11,8 @@ ENV AWX_URL=http://awxweb:8052 \
 #    VAULT_CONFIG_VIA=ENVIRONMENT_VARIABLES \
 #    VAULT_APPROLE_ROLE_ID=awx \
 #    VAULT_APPROLE_SECRET_ID=gsagasfdh234hjasfdgaf2 \
-    AWX_JWT_PROXY_USERNAME=awx-jwt-proxy \
-    AWX_JWT_PROXY_PASSWORD=password
+    AWX_JWT_AUTHENTICATOR_USERNAME=awx-jwt-authenticator \
+    AWX_JWT_AUTHENTICATOR_PASSWORD=password
 
 COPY src /src
 
