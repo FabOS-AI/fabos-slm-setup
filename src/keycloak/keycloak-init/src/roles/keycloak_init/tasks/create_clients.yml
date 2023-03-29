@@ -23,6 +23,8 @@
         - "*"
       webOrigins:
         - "*"
+      attributes:
+        post.logout.redirect.uris: "+"
     status_code: 201, 409
   changed_when: output_create_ssp_client.status == 201
   register: output_create_ssp_client

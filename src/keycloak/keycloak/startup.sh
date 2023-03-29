@@ -10,4 +10,4 @@ done
 
 export KC_DB_PASSWORD=$(cat "$KEYCLOAK_DATABASE_CONFIGDIR/password")
 
-bash /opt/keycloak/bin/kc.sh start-dev --db mariadb --transaction-xa-enabled=false --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
+bash /opt/keycloak/bin/kc.sh start-dev --db mariadb --transaction-xa-enabled=false
