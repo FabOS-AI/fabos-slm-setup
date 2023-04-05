@@ -25,6 +25,7 @@ keycloak_realms:
     displayNameHtml: ""
     enabled: true
     loginTheme: "fabos"
+    accessTokenLifespan: 86400
 
 keycloak_realm: fabos
 
