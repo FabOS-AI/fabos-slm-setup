@@ -128,9 +128,9 @@ vault:
 ### BaSyx
 basyx:
   aas-registry:
-    path: http://{{ target_host }}:4000
+    url: http://{{ target_host }}:4000/registry
   aas-server:
-    path: http://{{ target_host }}:4001
+    url: http://{{ target_host }}:4001/aasServer
 
 service-registry:
-  path: {{ service_registry_scheme }}://{{ target_host }}:{{ service_registry_port }}
+  url: {{ service_registry_scheme }}://{{ target_host }}:{{ service_registry_port }}
