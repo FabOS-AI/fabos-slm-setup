@@ -48,10 +48,16 @@ services:
       - "aas_database:/data/db"
 
   aas-gui:
-    image: eclipsebasyx/aas-gui:v230228
+    image: eclipsebasyx/aas-gui:230403
     restart: always
     ports:
       - "3000:3000"
+    environment:
+      VITE_REGISTRY_PATH: "http://${SLM_HOSTNAME}:4000/registry"
+      VITE_AAS_SERVER_PATH: "http://${SLM_HOSTNAME}:4001/aasServer"
+      VITE_PRIMARY_COLOR: "00A0E3"
+    volumes:
+      - "./config/aas-gui/logo:/app/src/assets/Logo"
 
 volumes:
   aas_database:
