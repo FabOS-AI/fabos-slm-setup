@@ -37,6 +37,7 @@ services:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
       BASYX_AASREGISTRY_URL: "http://${SLM_HOSTNAME}:4000/registry"
       BASYX_AASSERVER_URL: "http://${SLM_HOSTNAME}:4001/aasServer"
+      MONITORING_SERVICE_URL: "http://${SLM_HOSTNAME}:${MONITORING_SERVICE_PORT}"
     ports:
       - "${RESOURCE_REGISTRY_PORT}:9010"
     networks:

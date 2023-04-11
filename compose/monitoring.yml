@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  monitoring:
+    image: fabos4ai/slm-monitoring-prometheus:${MONITORING_SERVICE_VERSION}
+    networks:
+      default:
+        aliases:
+          - monitoring
+    ports:
+      - "${MONITORING_SERVICE_PORT}:8080"
+
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_VERSION}
+    networks:
+      default:
+        aliases:
+          - prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+

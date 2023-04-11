@@ -122,3 +122,8 @@ basyx:
     url: http://{{ target_host }}:4000/registry
   aas-server:
     url: http://{{ target_host }}:4001/aasServer
+
+### Monitoring
+monitoring:
+  service:
+    url: {{ monitoring_service_url }}
