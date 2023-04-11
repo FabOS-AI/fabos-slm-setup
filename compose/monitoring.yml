@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  monitoring:
-    image: fabos4ai/slm-monitoring-prometheus:${MONITORING_SERVICE_VERSION}
+  monitoring-prometheus-aas:
+    image: fabos4ai/fabos-monitoring-prometheus-aas:${MONITORING_SERVICE_VERSION}
     networks:
       default:
         aliases:
