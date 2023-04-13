@@ -32,7 +32,7 @@ services:
       basyxaas_registry_path: http://aas-registry:4000/registry/api/v1/registry
       basyxaas_aas_backend: MongoDB
       basyxaas_aas_aasxupload: Enabled
-      basyxaas_registry_host: ${SLM_HOSTNAME}
+      basyxaas_registry_host: http://${SLM_HOSTNAME}:4001/aasServer
       basyxmongodb_dbconnectionstring: mongodb://aas-database:27017/
       basyxcontext_accesscontrolalloworigin: "*"
       waiting_for: '[{"host":"aas-registry","port":"4000"}]'
