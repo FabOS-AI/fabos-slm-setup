@@ -96,6 +96,7 @@ awx:
   port: {{ awx_port }}
   username: {{ awx_resource_registry_username }}
   password: {{ awx_resource_registry_password }}
+  polling-interval-in-s: 4
 
 ### Consul
 consul:
