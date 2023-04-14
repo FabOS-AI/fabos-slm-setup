@@ -89,3 +89,4 @@ awx:
   port: {{ awx_port }}
   username: {{ awx_notification_service_username }}
   password: {{ awx_notification_service_password }}
+  polling-interval-in-s: 4
