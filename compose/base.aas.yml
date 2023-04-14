@@ -48,7 +48,8 @@ services:
       - "aas_database:/data/db"
 
   aas-gui:
-    image: eclipsebasyx/aas-gui:230403
+    # image: eclipsebasyx/aas-gui:230403 - replaced for HMI 2023
+    image: fabos4ai/aas-ui:1.2.0-SNAPSHOT
     restart: always
     ports:
       - "3000:3000"
