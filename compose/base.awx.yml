@@ -55,7 +55,7 @@ services:
       - awx-redis:/var/run/redis
 
   awx-jwt-authenticator:
-    image: fabos4ai/slm-awx-jwt-authenticator:${SLM_VERSION}
+    image: ghcr.io/eclipse-slm/awx-jwt-authenticator:1.0.0-snapshot
     restart: unless-stopped
     logging:
       driver: "json-file"
