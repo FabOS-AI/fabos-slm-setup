@@ -56,15 +56,15 @@
         name: "keycloak_init"
         tasks_from: create_users.yml
 
-    - name: "Get client secret of awx-jwt-proxy"
+    - name: "Get client secret of awx-jwt-authenticator"
       block:
         - include_role:
             name: keycloak_client
             tasks_from: clients/get_client_secret.yml
           vars:
-            client_id: awx-jwt-proxy
+            client_id: awx-jwt-authenticator
         - set_fact:
-            awx_jwt_proxy_keycloak_secret_id: "{{ client_secret }}"
+            awx_jwt_authenticator_keycloak_secret_id: "{{ client_secret }}"
 
     - include_role:
         name: keycloak_init

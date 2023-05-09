@@ -96,6 +96,7 @@ awx:
   port: {{ awx_port }}
   username: {{ awx_resource_registry_username }}
   password: {{ awx_resource_registry_password }}
+  polling-interval-in-s: 4
 
 ### Consul
 consul:
@@ -115,3 +116,15 @@ vault:
     role-id: {{ vault_resource_registry_app_role_id }}
     secret-id: {{ vault_resource_registry_app_secret_id }}
     app-role-path: approle
+
+### BaSyx
+basyx:
+  aas-registry:
+    url: http://{{ target_host }}:4000/registry
+  aas-server:
+    url: http://{{ target_host }}:4001/aasServer
+
+### Monitoring
+monitoring:
+  service:
+    url: {{ monitoring_service_url }}

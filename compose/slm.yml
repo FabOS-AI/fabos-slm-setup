@@ -19,8 +19,9 @@ services:
     extra_hosts:
       - "${SLM_HOSTNAME}:172.17.0.1"
     environment:
-      VUE_APP_KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
-      VUE_APP_AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
+      KEYCLOAK_URL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      AWX_URL: "http://${SLM_HOSTNAME}:${AWX_PORT_HTTP}"
+      BASYX_AAS_GUI_URL: "http://${SLM_HOSTNAME}:3000"
     healthcheck:
       test: [ "CMD", "curl", "http://localhost:8080" ]
 
@@ -34,6 +35,9 @@ services:
         max-size: ${LOGGING_MAX_SIZE}
     environment:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
+      BASYX_AASREGISTRY_URL: "http://${SLM_HOSTNAME}:4000/registry"
+      BASYX_AASSERVER_URL: "http://${SLM_HOSTNAME}:4001/aasServer"
+      MONITORING_SERVICE_URL: "http://${SLM_HOSTNAME}:${MONITORING_SERVICE_PORT}"
     ports:
       - "${RESOURCE_REGISTRY_PORT}:9010"
     networks:
@@ -103,6 +107,9 @@ services:
     environment:
       KEYCLOAK_AUTHSERVERURL: "http://${SLM_HOSTNAME}:${KEYCLOAK_PORT}/auth"
       GIT_SERVICEOFFERINGIMPORTER_UPDATERINTERVALMINUTES: "${SERVICE_REGISTRY_GIT_CHECK_INTERVAL_MINUTES}"
+      BASYX_AASREGISTRY_URL: "http://${SLM_HOSTNAME}:4000/registry"
+      BASYX_AASSERVER_URL: "http://${SLM_HOSTNAME}:4001/aasServer"
+      SERVICEREGISTRY_URL: "http://${SLM_HOSTNAME}:${SERVICE_REGISTRY_PORT}"
     ports:
       - "${SERVICE_REGISTRY_PORT}:9020"
     networks:
@@ -206,7 +213,6 @@ services:
       - notification-service-database_config:/config
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "--silent" ]
-  ###endregion Custom Service Lifecycle Components
 
 networks:
   default:

@@ -39,7 +39,7 @@ services:
     env_file:
       - "config/keycloak.env"
     volumes:
-      - keycloak_config_awx-jwt-proxy:/config/awx-jwt-proxy
+      - keycloak_config_awx-jwt-authenticator:/config/awx-jwt-authenticator
       - keycloak_config_notification-service:/config/notification-service
       - keycloak_config_resource-registry:/config/resource-registry
       - keycloak_config_service-registry:/config/service-registry
@@ -73,7 +73,7 @@ services:
 volumes:
   keycloak-database_data:
   keycloak-database_config:
-  keycloak_config_awx-jwt-proxy:
+  keycloak_config_awx-jwt-authenticator:
   keycloak_config_notification-service:
   keycloak_config_resource-registry:
   keycloak_config_service-registry:

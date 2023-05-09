@@ -7,9 +7,6 @@ keycloak:
 awx:
   url: "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
   users:
-    awx-jwt-proxy:
-      username: "{{ awx_jwt_proxy_username }}"
-      password: "{{ awx_jwt_proxy_password }}"
     notification-service:
       username: "{{ awx_notification_service_username }}"
       password: "{{ awx_notification_service_password }}"
@@ -31,9 +28,6 @@ vault:
   url: "{{ vault_scheme }}://{{ vault_hostname }}:{{ vault_port }}"
   root_token: "{{ vault_root_token }}"
   app-roles:
-    awx-jwt-proxy:
-      role-id: "{{ vault_awx_jwt_proxy_app_role_id }}"
-      secret-id: "{{ vault_awx_jwt_proxy_app_secret_id }}"
     resource-registry:
       role-id: "{{ vault_resource_registry_app_role_id }}"
       secret-id: "{{ vault_resource_registry_app_secret_id }}"

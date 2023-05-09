@@ -14,8 +14,8 @@
             awx_admin_password: "{{ lookup('env', 'AWX_ADMIN_PASSWORD') }}"                 # Password of AWX admin user
             awx_scm_username: "{{ lookup('env', 'AWX_SCM_USERNAME') }}"                     # Username of SCM user to import projects in AWX
             awx_scm_password: "{{ lookup('env', 'AWX_SCM_PASSWORD') }}"                     # Password of SCM user to import projects in AWX
-            awx_jwt_proxy_awx_username: "{{ lookup('env', 'AWX_JWT_PROXY_USERNAME') }}"     # Username of user for AWX JWT proxy
-            awx_jwt_proxy_awx_password: "{{ lookup('env', 'AWX_JWT_PROXY_PASSWORD') }}"     # Password of user for AWX JWT proxy
+            awx_jwt_authenticator_awx_username: "{{ lookup('env', 'AWX_JWT_AUTHENTICATOR_USERNAME') }}"     # Username of user for AWX JWT Authenticator
+            awx_jwt_authenticator_awx_password: "{{ lookup('env', 'AWX_JWT_AUTHENTICATOR_PASSWORD') }}"     # Password of user for AWX JWT Authenticator
             consul_config_via: "{{ lookup('env', 'CONSUL_CONFIG_VIA') }}"                   # Defines how the configuration of Consul is defined (SHARED_VOLUME or ENVIRONMENT_VARIABLES)
             consul_token: "{{ lookup('env', 'CONSUL_TOKEN') }}"
             vault_config_via: "{{ lookup('env', 'VAULT_CONFIG_VIA') }}"                     # Defines how the configuration of Vault is defined (SHARED_VOLUME or ENVIRONMENT_VARIABLES)
@@ -31,8 +31,8 @@
               - (awx_admin_user is defined) and (awx_admin_user|length > 0)
               - (awx_admin_username is defined) and (awx_admin_username|length > 0)
               - (awx_admin_password is defined) and (awx_admin_password|length > 0)
-              - (awx_jwt_proxy_awx_username is defined) and (awx_jwt_proxy_awx_username|length > 0)
-              - (awx_jwt_proxy_awx_password is defined) and (awx_jwt_proxy_awx_password|length > 0)
+              - (awx_jwt_authenticator_awx_username is defined) and (awx_jwt_authenticator_awx_username|length > 0)
+              - (awx_jwt_authenticator_awx_password is defined) and (awx_jwt_authenticator_awx_password|length > 0)
             fail_msg: "Variable must be defined and not empty"
 
         - assert:

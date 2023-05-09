@@ -14,20 +14,8 @@
       "enabled": true
     },
     {
-      "key": "awx.jwt-proxy.url",
+      "key": "awx.jwt-authenticator.url",
       "value": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}",
-      "type": "default",
-      "enabled": true
-    },
-    {
-      "key": "awx.jwt-proxy.vault.role-id",
-      "value": "{{ vault_awx_jwt_proxy_app_role_id }}",
-      "type": "default",
-      "enabled": true
-    },
-    {
-      "key": "awx.jwt-proxy.vault.role-secret-id",
-      "value": "{{ vault_awx_jwt_proxy_app_secret_id }}",
       "type": "default",
       "enabled": true
     },

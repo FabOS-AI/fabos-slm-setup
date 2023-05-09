@@ -2,12 +2,8 @@
   "awx": {
     "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
   },
-  "awx-jwt-proxy": {
-    "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}",
-    "vault": {
-      "role-id": "{{ vault_awx_jwt_proxy_app_role_id }}",
-      "secret-id": "{{ vault_awx_jwt_proxy_app_secret_id }}"
-    }
+  "awx-jwt-authenticator": {
+    "url": "{{ awx_scheme }}://{{ awx_hostname }}:{{ awx_port }}"
   },
   "consul": {
     "url": "{{ consul_scheme }}://{{ consul_hostname }}:{{ consul_port }}/v1",

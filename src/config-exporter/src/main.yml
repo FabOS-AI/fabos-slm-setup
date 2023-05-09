@@ -9,12 +9,9 @@
         target_host: "{{ lookup('env', 'SLM_HOSTNAME') }}"
     - set_fact:
         keycloak_auth_server_url: "http://{{ lookup('env', 'SLM_HOSTNAME') }}:7080/auth"
-        keycloak_awx_jwt_proxy_config: "{{ lookup('file', '/config/keycloak/awx-jwt-proxy/fabos-keycloak.json') }}"
         awx_scheme: "http"
         awx_hostname: "{{ lookup('env', 'SLM_HOSTNAME') }}"
         awx_port:  "{{ lookup('env', 'AWX_PORT_HTTP') }}"
-        awx_jwt_proxy_username: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_username') }}"
-        awx_jwt_proxy_password: "{{ lookup('file', '/config/awx/awx-jwt-proxy/awx_password') }}"
         awx_notification_service_username: "{{ lookup('file', '/config/awx/notification-service/awx_username') }}"
         awx_notification_service_password: "{{ lookup('file', '/config/awx/notification-service/awx_password') }}"
         awx_resource_registry_username: "{{ lookup('file', '/config/awx/resource-registry/awx_username') }}"
@@ -31,30 +28,44 @@
         vault_hostname: "{{ target_host }}"
         vault_port: "{{ lookup('env', 'VAULT_PORT') }}"
         vault_root_token: "{{ lookup('file', '/config/vault/root/root_token') }}"
-        vault_awx_jwt_proxy_authentication: "APPROLE"
-        vault_awx_jwt_proxy_app_role_id: "{{ lookup('file', '/config/vault/awx-jwt-proxy/role_id') }}"
-        vault_awx_jwt_proxy_app_secret_id: "{{ lookup('file', '/config/vault/awx-jwt-proxy/secret_id') }}"
         vault_resource_registry_app_role_id: "{{ lookup('file', '/config/vault/resource-registry/role_id') }}"
         vault_resource_registry_app_secret_id: "{{ lookup('file', '/config/vault/resource-registry/secret_id') }}"
         vault_service_registry_app_role_id: "{{ lookup('file', '/config/vault/service-registry/role_id') }}"
         vault_service_registry_app_secret_id: "{{ lookup('file', '/config/vault/service-registry/secret_id') }}"
+        resource_registry_scheme: "http"
         resource_registry_host: "{{ target_host }}"
         resource_registry_port: "{{ lookup('env', 'RESOURCE_REGISTRY_PORT') }}"
         resource_registry_database_user: "{{ lookup('file', '/config/resource-registry/database/user') }}"
         resource_registry_database_password: "{{ lookup('file', '/config/resource-registry/database/password') }}"
         resource_registry_database_schema: "{{ lookup('file', '/config/resource-registry/database/schema') }}"
+        service_registry_scheme: "http"
         service_registry_host: "{{ target_host }}"
         service_registry_port: "{{ lookup('env', 'SERVICE_REGISTRY_PORT') }}"
         service_registry_database_user: "{{ lookup('file', '/config/service-registry/database/user') }}"
         service_registry_database_password: "{{ lookup('file', '/config/service-registry/database/password') }}"
         service_registry_database_schema: "{{ lookup('file', '/config/service-registry/database/schema') }}"
+        notification_service_scheme: "http"
         notification_service_host: "{{ target_host }}"
         notification_service_port: "{{ lookup('env', 'NOTIFICATION_SERVICE_PORT') }}"
         notification_service_database_user: "{{ lookup('file', '/config/notification-service/database/user') }}"
         notification_service_database_password: "{{ lookup('file', '/config/notification-service/database/password') }}"
         notification_service_database_schema: "{{ lookup('file', '/config/notification-service/database/schema') }}"
+        catalog_service_scheme: "http"
+        catalog_service_host: "{{ target_host }}"
+        catalog_service_port: "{{ lookup('env', 'SLM_CATALOG_SERVICE_PORT') }}"
+        catalog_service_database_user: "{{ lookup('file', '/config/catalog/database/user') }}"
+        catalog_service_database_password: "{{ lookup('file', '/config/catalog/database/password') }}"
+        catalog_service_database_schema: "{{ lookup('file', '/config/catalog/database/schema') }}"
+        monitoring_service_scheme: "http"
+        monitoring_service_host: "{{ lookup('env', 'SLM_HOSTNAME') }}"
+        monitoring_service_port: "{{ lookup('env', 'MONITORING_SERVICE_PORT') }}"
     - set_fact:
         awx_url: "{{awx_scheme}}://{{awx_hostname}}:{{awx_port}}"
+        resource_registry_url: "{{resource_registry_scheme}}://{{resource_registry_host}}:{{resource_registry_port}}"
+        service_registry_url: "{{service_registry_scheme}}://{{service_registry_host}}:{{service_registry_port}}"
+        notification_service_url: "{{notification_service_scheme}}://{{notification_service_host}}:{{notification_service_port}}"
+        catalog_service_url: "{{catalog_service_scheme}}://{{catalog_service_host}}:{{catalog_service_port}}"
+        monitoring_service_url: "{{monitoring_service_scheme}}://{{monitoring_service_host}}:{{monitoring_service_port}}"
 
     - name: "Ensures /project/_config_generated dir exists"
       file:
@@ -78,8 +89,6 @@
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       with_items:
-        - src: /templates/awx-jwt-proxy/application.yml
-          dest: /project/awx_jwt_proxy/src/main/resources/application.yml
         - src: /templates/notification-service/application.yml
           dest: /project/notification_service/notification_service.service/notification_service.service.rest/src/main/resources/application.yml
         - src: /templates/resource-registry/application.yml
@@ -90,9 +99,12 @@
           dest: /project/service_registry/service_registry.service/service_registry.service.rest/src/main/resources/application.yml
         - src: /templates/service-registry-initializer/application.yml
           dest: /project/service_registry/service_registry.service/service_registry.service.initializer/src/main/resources/application.yml
+        - src: /templates/catalog/application.yml
+          dest: /project/catalog/catalog.service/catalog.service.app/src/main/resources/application.yml
         - src: /templates/ui/.env
           dest: /project/ui/.env
       when: configure_core_project|default(false)|bool == true
+      ignore_errors: true
 
     - name: "Copy Keycloak configs"
       copy:
